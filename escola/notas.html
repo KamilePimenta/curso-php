@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário de Média</title>
+</head>
+<body>
+<form id="form-media" action="calcular.php" method="post">
+    <label>
+        Nota 1
+        <input type="number" min="0" max="10" step="1" value="0" name="nota_um" id="nota_um">
+    </label>
+    <label>
+        Nota 2
+        <input type="number" min="0" max="10" step="1" value="0" name="nota_dois" id="nota_dois">
+    </label>
+    <label>
+        Nota 3
+        <input type="number" min="0" max="10" step="1" value="0" name="nota_tres" id="nota_tres">
+    </label>
+    <label>
+        Nota 4
+        <input type="number" min="0" max="10" step="1" value="0" name="nota_quatro" id="nota_quatro">
+    </label>
+    <button type="submit">Calcular</button>
+</form>
+
+<div id="retorno"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $('#form-media').submit(function (e) {
+        // Evita a subimissão do form sem tratamento
+        e.preventDefault();
+
+        var $this = $(this);
+
+        // Faz uma chamada AJAX via POST
+        $.post(
+            // Url do action
+            $this.attr('action'),
+            // Campos a serem enviados
+            $this.serialize(),
+            // Retorna o resulado da URL de Action
+            function (dados) {
+                // Coloca os dados dentro de #Retorno
+                $('#retorno').empty().html(dados);
+            }
+        );
+    });
+</script>
+</body>
+</html>
