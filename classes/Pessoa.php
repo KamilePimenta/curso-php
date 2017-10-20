@@ -13,7 +13,7 @@ class Pessoa
      * @param $sobrenome
      * @param $dataNascimento
      */
-    function __construct($nome, $sobrenome, $dataNascimento)
+    function __construct($nome = null, $sobrenome = null, $dataNascimento = null)
     {
         $this
             ->setNome($nome)
