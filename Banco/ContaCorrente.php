@@ -6,9 +6,19 @@ class ContaCorrente extends Conta
 {
     private $creditoPessoal;
 
+    /**
+     * ContaCorrente constructor.
+     *
+     * @param int   $agencia
+     * @param int   $numero
+     * @param float $saldo
+     * @param float $credito
+     */
     public function __construct($agencia, $numero, $saldo = 0.00, float $credito = 500.00)
     {
         $this->creditoPessoal = $credito;
+
+        // Executa o método construtor da Class Pai
         parent::__construct($agencia, $numero, $saldo);
     }
 
@@ -20,6 +30,13 @@ class ContaCorrente extends Conta
         return $this->creditoPessoal;
     }
 
+    /**
+     * Utiliza o creditoPessoal no saque
+     *
+     * @param float $valor
+     *
+     * @return $this
+     */
     public function sacar(float $valor)
     {
         if( $valor > 0 ){
