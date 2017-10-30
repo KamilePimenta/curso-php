@@ -2,7 +2,7 @@
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'Conta.php';
 
-class ContaCorrente extends Conta
+final class ContaCorrente extends Conta
 {
     private $creditoPessoal;
 

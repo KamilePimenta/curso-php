@@ -1,6 +1,6 @@
 <?php
 
-class Conta
+abstract class Conta
 {
     private $numero;
     private $agencia;

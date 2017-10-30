@@ -1,9 +1,17 @@
 <?php
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'Banco' . DIRECTORY_SEPARATOR . 'ContaCorrente.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'Banco' . DIRECTORY_SEPARATOR . 'ContaPoupanca.php';
 
-$teste = new ContaCorrente( 190, 899, 150.00 );
+$cc = new ContaCorrente( 190, 899, 150.00 );
 
-$teste->depositar(200);
-$teste->sacar(5000);
+$cc->depositar(200);
 
-echo $teste->getSaldo(true);
+echo $cc->getSaldo(true) . '<hr>';
+
+$cp = new ContaPoupanca(190, 899, $cc->getSaldo());
+
+$cc->sacar($cc->getSaldo());
+
+$cp->depositar(100);
+
+echo $cp->getSaldo(true);

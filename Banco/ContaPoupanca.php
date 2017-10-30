@@ -1,10 +1,10 @@
 <?php
 
-class ContaPoupanca extends Conta
+final class ContaPoupanca extends Conta
 {
     private  $juros;
 
-    public function __construct($agencia, $numero, $saldo = 0.00, float $juros)
+    public function __construct($agencia, $numero, $saldo = 0.00, float $juros = 0.1)
     {
         $this->juros = $juros;
         parent::__construct($agencia, $numero, $saldo);
@@ -13,7 +13,7 @@ class ContaPoupanca extends Conta
     /**
      * @return float
      */
-    public function getJuros(): float
+    public function getJuros()
     {
         return $this->juros;
     }
@@ -21,7 +21,9 @@ class ContaPoupanca extends Conta
     public function depositar(float $valor)
     {
         if( $valor > 0 ){
-            $this->saldo = ( $valor + $this->juros );
+            $this->saldo += $valor + ( $valor * $this->juros );
         }
+
+        return $this;
     }
 }
