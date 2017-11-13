@@ -56,3 +56,71 @@ FROM Transacoes
   INNER JOIN Clientes Compradores ON Transacoes.comprador = Compradores.id
   INNER JOIN Clientes Vendedores ON Transacoes.vendedor = Vendedores.id
   INNER JOIN FormasPagamento ON Transacoes.formaPagto = FormasPagamento.id;
+
+INSERT INTO
+  VeiculosDasTransacoes (veiculo, transacao)
+VALUES (1, 1), (1, 2);
+
+INSERT INTO
+  VeiculosDasTransacoes (veiculo, transacao)
+VALUES (2, 2);
+
+DELETE FROM VeiculosDasTransacoes
+WHERE veiculo = 2 AND transacao = 2;
+
+-- Exercício: Retornar o nome do Comprador e do Vendedor mais o Valor Total e a Froma de Pagamento
+-- da Transação, com os dados do veículo: Modelo e Placa.
+
+SELECT
+  Transacoes.id        AS 'ID da Transação',
+  Vendedor.nome        AS 'Vendedor',
+  Comprador.nome       AS 'Comprador',
+  Modelos.nome         AS 'Modelo',
+  Veiculos.placa       AS 'Placa',
+  Transacoes.valor     AS 'Valor Total',
+  FormasPagamento.nome AS 'Forma de Pagamento'
+FROM Transacoes
+  INNER JOIN Clientes Vendedor ON Transacoes.vendedor = Vendedor.id
+  INNER JOIN Clientes Comprador ON Transacoes.comprador = Comprador.id
+  INNER JOIN FormasPagamento ON Transacoes.formaPagto = FormasPagamento.id
+  INNER JOIN VeiculosDasTransacoes ON Transacoes.id = VeiculosDasTransacoes.transacao
+  INNER JOIN Veiculos ON VeiculosDasTransacoes.veiculo = Veiculos.id
+  INNER JOIN Modelos ON Veiculos.modelo = Modelos.id;
+
+SELECT
+  Clientes.nome                  AS 'Nome',
+  COUNT(VeiculoComprado.veiculo) AS 'Veículos Comprados'
+FROM
+  Clientes
+  -- Relacionando as tabelas para venda
+  LEFT JOIN Transacoes Comprador ON Clientes.id = Comprador.comprador
+  INNER JOIN VeiculosDasTransacoes VeiculoComprado ON Comprador.id = VeiculoComprado.transacao
+GROUP BY Clientes.id;
+
+SELECT
+  Clientes.nome                  AS 'Nome',
+  COUNT(VeiculoVendido.veiculo)  AS 'Veículos Vendidos'
+FROM
+  Clientes
+  -- Relacionando as tabelas para compra
+  LEFT JOIN Transacoes Vendedor ON Clientes.id = Vendedor.vendedor
+  INNER JOIN VeiculosDasTransacoes VeiculoVendido ON Vendedor.id = VeiculoVendido.transacao
+GROUP BY Clientes.id;
+
+
+
+-- TODO: Localizar erro
+SELECT
+  Clientes.nome                  AS 'Nome',
+  count(VeiculoComprado.veiculo) AS 'Veículos Comprados',
+  count(VeiculoVendido.veiculo)  AS 'Veículos Vendidos'
+FROM
+  Clientes
+  -- Relacionando as tabelas para venda
+  LEFT JOIN Transacoes Comprador ON Clientes.id = Comprador.comprador
+  INNER JOIN VeiculosDasTransacoes VeiculoComprado ON Comprador.id = VeiculoComprado.transacao
+
+  -- Relacionando as tabelas para compra
+  LEFT JOIN Transacoes Vendedor ON Clientes.id = Vendedor.vendedor
+  INNER JOIN VeiculosDasTransacoes VeiculoVendido ON Vendedor.id = VeiculoVendido.transacao
+ GROUP BY Clientes.id;
