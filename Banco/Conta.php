@@ -1,5 +1,8 @@
 <?php
 
+// Determina o caminho da Classe
+namespace Banco;
+
 abstract class Conta
 {
     private $numero;

@@ -1,6 +1,10 @@
 <?php
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'Conta.php';
+// Determina o caminho da Classe
+namespace Banco\Contas;
+
+// Informa o caminho completo (namespace) de uma Classe
+use Banco\Conta;
 
 final class ContaCorrente extends Conta
 {

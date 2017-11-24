@@ -1,5 +1,10 @@
 <?php
 
+// Determina o caminho da Classe
+namespace Banco\Contas;
+
+use Banco\Conta;
+
 final class ContaPoupanca extends Conta
 {
     private  $juros;
