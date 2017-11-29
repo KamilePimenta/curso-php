@@ -4,8 +4,8 @@
  */
 
 return [
-    'host' => 'localhost',
-    'dbname'   => '',
-    'user' => '',
-    'pass' => '',
+    'host'   => 'localhost',
+    'dbname' => '',
+    'user'   => '',
+    'pass'   => '',
 ];
