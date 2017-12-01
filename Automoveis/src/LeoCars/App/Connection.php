@@ -12,14 +12,20 @@ class Connection
 
     public function __construct()
     {
-        $config = Utilities::getConfig(Utilities::TYPE_DATABASE);
+        $config = new Config(Config::TYPE_DATABASE);
 
-        $dbname = $config['dbname'] ?? 'test';
-        $host = $config['host'] ?? 'localhost';
-        $user = $config['user'] ?? 'root';
-        $pass = $config['pass'] ?? '';
+        $dbname = $config->get('dbname');
+        $host = $config->get('host');
+        $user = $config->get('user');
+        $pass = $config->get('pass');
 
-        $this->conn = new \PDO("mysql:dbname=$dbname;host=$host", $user, $pass);
+        try{
+            $this->conn = new \PDO("mysql:host=$host;dbname=$dbname", $user, $pass,[
+                \PDO::ATTR_ERRMODE=>\PDO::ERRMODE_EXCEPTION
+            ]);
+        } catch (\PDOException $e){
+            die('Erro de conexão: ' . $e->getMessage());
+        }
     }
 
     /**

@@ -6,7 +6,7 @@
 namespace LeoCars\App;
 
 
-class Utilities
+class Config
 {
     /** Caminho da pasta de configurações */
     const PATH_CONFIG =
@@ -20,30 +20,41 @@ class Utilities
     const TYPE_DATABASE = 'database';
     const TYPE_ROUTES = 'routes';
 
+    private $config;
+
     /**
      * Pega as configurações do sistema
      *
      * @param string $type Tipo de configuração
-     *
-     * @return array
      */
-    static public function getConfig($type)
+    public function __construct($type)
     {
         // Pega o arquivo se ele existir
         $path = self::PATH_CONFIG . $type . '.php';
         $response = [];
         if (file_exists($path)) {
             $response = include($path);
+
+            // Verifica se há configurações locais
+            $pathLocal = self::PATH_CONFIG . $type . '.local.php';
+            if( file_exists($pathLocal) ){
+                $temp = include ($pathLocal);
+                // Substitui a configuração pelas configurações locais
+                $response = array_merge($response, $temp);
+            }
         }
 
-        // Verifica se há configurações locais
-        $pathLocal = self::PATH_CONFIG . $type . '.local.php';
-        if( file_exists($pathLocal) ){
-            $temp = include ($pathLocal);
-            // Substitui a configuração pelas configurações locais
-            $response = array_merge($response, $temp);
-        }
+        $this->config = $response;
+    }
 
-        return $response;
+    /**
+     * Pega um parâmetro do arquivo de configuração desejado
+     *
+     * @param $param
+     *
+     * @return mixed|null
+     */
+    public function get($param){
+        return $this->config[$param] ?? null;
     }
 }
