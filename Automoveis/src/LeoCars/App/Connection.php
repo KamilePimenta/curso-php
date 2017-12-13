@@ -19,11 +19,11 @@ class Connection
         $user = $config->get('user');
         $pass = $config->get('pass');
 
-        try{
-            $this->conn = new \PDO("mysql:host=$host;dbname=$dbname", $user, $pass,[
-                \PDO::ATTR_ERRMODE=>\PDO::ERRMODE_EXCEPTION
+        try {
+            $this->conn = new \PDO("mysql:host=$host;dbname=$dbname", $user, $pass, [
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             ]);
-        } catch (\PDOException $e){
+        } catch (\PDOException $e) {
             die('Erro de conexão: ' . $e->getMessage());
         }
     }

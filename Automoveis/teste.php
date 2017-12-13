@@ -4,14 +4,12 @@ use LeoCars\Entities\Model;
 
 require_once '_autoload.php';
 
-$conn = new \LeoCars\App\Connection();
+$conn = new \LeoCars\App\Query();
 
 // Insere os registros na tabela
 
 try {
-    $query = $conn->getConn()->prepare('SELECT * FROM Models WHERE isCar = :isCar ORDER BY name');
-    $query->bindValue(':isCar',true, PDO::PARAM_BOOL);
-    $query->execute();
+    $query = $conn->exec('SELECT * FROM Models WHERE isCar = :isCar ORDER BY name', ['isCar'=>true]);
 
     //die( $query->fetchObject(Model::class)->getName() );
 
